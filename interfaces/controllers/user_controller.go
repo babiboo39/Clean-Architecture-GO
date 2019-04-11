@@ -50,3 +50,23 @@ func (controller *UserController) Show(c Context) {
 	}
 	c.JSON(200, user)
 }
+
+
+
+func (controller *UserController) Compare(c *gin.Context) {
+
+	email := c.PostForm("Email")
+	password := c.PostForm("Password")
+
+	fmt.Println(email)
+	fmt.Println(password)
+
+	_, err := controller.Interactor.Login(email, password)
+	if err != nil {
+		c.JSON(500, NewError(err))
+		return
+	} else {
+		c.JSON(201, "Login success")
+	}
+
+}
