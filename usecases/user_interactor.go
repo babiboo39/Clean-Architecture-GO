@@ -25,7 +25,7 @@ func (interactor *UserInteractor) UserById(identifier int) (user domain.User, er
 	return
 }
 
-//func (interactor *UserInteractor) Login(email string)(user domain.User, err error) {
-//	user, err = interactor.UserRepository.FindByEmail(email)
-//	return
-//}
+func (interactor *UserInteractor) Login(email string, password string) (user domain.User, err error) {
+	user, err = interactor.UserRepository.FindByEmail(email, password)
+	return
+}
