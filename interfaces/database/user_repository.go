@@ -73,26 +73,27 @@ func (repo *UserRepository) FindAll() (users domain.Users, err error) {
 	return
 }
 
-//func (repo *UserRepository) FindByEmail(email string) (user domain.User, err error) {
-//	//var req *http.Request
-//
-//	var databaseEmail string
-//	var databasePassword string
-//
-//	rows,err := repo.Query("Select email, password from users where email=?", email)
-//	defer rows.Close()
-//	if err != nil {
-//		return
-//	}
-//	for rows.Next(){
-//		if err :=rows.Scan(&databaseEmail, &databasePassword); err != nil {
-//			continue
-//		}
-//
-//		err = bcrypt.CompareHashAndPassword([]byte(databasePassword), []byte(user.Password))
-//
-//	}
-//}
+
+func (repo *UserRepository) FindByEmail(email string, password string) (user domain.User, err error) {
+	//var req *http.Request
+
+	var databaseEmail string
+	var databasePassword string
+
+	rows, err := repo.Query("Select email, password from users where email=?", email)
+	if err != nil {
+	}
+	for rows.Next() {
+		if err := rows.Scan(&databaseEmail, &databasePassword); err != nil {
+			continue
+		}
+		err = bcrypt.CompareHashAndPassword([]byte(databasePassword), []byte(password))
+	}
+	defer rows.Close()
+
+	return
+}
+
 
 func hashPassword(input string) string {
 	password := []byte(input)
