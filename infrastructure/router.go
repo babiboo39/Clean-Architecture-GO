@@ -12,7 +12,8 @@ func init() {
 
 	userController := controllers.NewUserController(NewSqlHandler())
 
-	router.POST("/users", func(c *gin.Context) { userController.Create(c) })
+	router.POST("/signup", func(c *gin.Context) { userController.Create(c) })
+	router.POST("/signin", func(c *gin.Context) { userController.Compare(c) })
 	router.GET("/users", func(c *gin.Context) { userController.Index(c) })
 	router.GET("/users/:id", func(c *gin.Context) { userController.Show(c) })
 
